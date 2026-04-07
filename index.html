@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRACTOS Y MAX | Autos y Camiones Nuevos y Seminuevos</title>
+<meta name="description" content="Venta de autos y camiones nuevos y seminuevos. Financiamiento flexible, asesoría personalizada y entrega rápida. Tu socio confiable en México.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,700;1,800;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg-deep: #0c0718;
+  --bg-main: #0f0a1e;
+  --bg-card: #1a1235;
+  --bg-card-hover: #221845;
+  --purple-border: #3d2d6b;
+  --purple-glow: #5a3d8a;
+  --gold: #e5a000;
+  --gold-light: #f0b820;
+  --gold-dark: #c48800;
+  --green: #25d366;
+  --white: #ffffff;
+  --gray-100: #f0eef5;
+  --gray-200: #d4d0e0;
+  --gray-300: #a8a0b8;
+  --gray-400: #78708a;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --nav-h: 72px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-main);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font-family: inherit; }
+
+/* ── Utility ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.label-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatDiamond {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(-18px); }
+}
+@keyframes floatDiamond2 {
+  0%, 100% { transform: rotate(45deg) translateY(0) scale(0.7); }
+  50% { transform: rotate(45deg) translateY(12px) scale(0.7); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(229,160,0,0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(229,160,0,0.15); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(12, 7, 24, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(61, 45, 107, 0.4);
+  z-index: 1000;
+  transition: background 0.3s;
+}
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+.nav-logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-logo-icon svg { width: 20px; height: 20px; fill: var(--bg-deep); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-200);
+  transition: color 0.25s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-call {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--gray-200);
+  transition: color 0.25s;
+}
+.nav-call:hover { color: var(--white); }
+.nav-call svg { width: 16px; height: 16px; fill: currentColor; }
+.btn-cotizar {
+  padding: 9px 22px;
+  border: 1.5px solid var(--gold);
+  border-radius: 8px;
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-cotizar:hover {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  width: 24px; height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: var(--nav-h);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(90, 61, 138, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(229, 160, 0, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  animation: fadeUp 0.8s ease-out;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(37, 211, 102, 0.1);
+  border: 1px solid rgba(37, 211, 102, 0.25);
+  border-radius: 24px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 28px;
+  color: var(--gray-100);
+}
+.hero-badge .dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulseGlow 2s infinite;
+  box-shadow: 0 0 8px rgba(37, 211, 102, 0.5);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero h1 .gold { color: var(--gold); }
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--gray-300);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 30px;
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(229, 160, 0, 0.25);
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--gray-400);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-outline:hover {
+  border-color: var(--white);
+  background: rgba(255,255,255,0.05);
+}
+.hero-call {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--gray-300);
+}
+.hero-call svg { width: 16px; height: 16px; fill: var(--gray-300); }
+
+/* Diamonds */
+.diamonds {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+.diamond {
+  position: absolute;
+  border: 2px solid rgba(229, 160, 0, 0.15);
+  border-radius: 4px;
+}
+.diamond-1 {
+  width: 220px; height: 220px;
+  top: -160px; right: 0;
+  transform: rotate(45deg);
+  animation: floatDiamond 6s ease-in-out infinite;
+  border-color: rgba(229, 160, 0, 0.12);
+}
+.diamond-2 {
+  width: 160px; height: 160px;
+  top: -80px; right: -60px;
+  animation: floatDiamond2 7s ease-in-out infinite;
+  border-color: rgba(229, 160, 0, 0.08);
+}
+.diamond-3 {
+  width: 120px; height: 120px;
+  top: 80px; right: 40px;
+  transform: rotate(45deg);
+  animation: floatDiamond 8s ease-in-out infinite 1s;
+  border-color: rgba(90, 61, 138, 0.25);
+  background: rgba(90, 61, 138, 0.06);
+}
+
+/* ── WHY SECTION ── */
+.why-section {
+  padding: 100px 0;
+  position: relative;
+}
+.why-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple-border), transparent);
+}
+.why-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.why-header h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  margin-bottom: 12px;
+}
+.why-header h2 .gold { color: var(--gold); }
+.why-header p {
+  color: var(--gray-300);
+  font-size: 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+.why-card {
+  background: linear-gradient(160deg, rgba(42, 31, 78, 0.7), rgba(26, 18, 53, 0.9));
+  border: 1px solid var(--purple-border);
+  border-radius: 14px;
+  padding: 28px 22px;
+  transition: all 0.35s;
+  position: relative;
+  overflow: hidden;
+}
+.why-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple-glow), transparent);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple-glow);
+  box-shadow: 0 12px 40px rgba(90, 61, 138, 0.15);
+}
+.why-card:hover::before { opacity: 1; }
+.why-icon {
+  width: 48px; height: 48px;
+  background: rgba(229, 160, 0, 0.12);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+}
+.why-icon svg { width: 24px; height: 24px; fill: var(--gold); }
+.why-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+.why-card p {
+  font-size: 0.82rem;
+  color: var(--gray-300);
+  line-height: 1.55;
+}
+
+/* ── INVENTORY ── */
+.inventory-section {
+  padding: 100px 0;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.section-header h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+.section-header > p {
+  color: var(--gray-300);
+  font-size: 1rem;
+}
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.inv-card {
+  background: linear-gradient(160deg, rgba(42, 31, 78, 0.6), rgba(18, 12, 40, 0.9));
+  border: 1px solid var(--purple-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.35s;
+}
+.inv-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple-glow);
+  box-shadow: 0 16px 48px rgba(90, 61, 138, 0.12);
+}
+.inv-image {
+  height: 200px;
+  background: linear-gradient(135deg, rgba(42,31,78,0.5), rgba(15,10,30,0.8));
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.inv-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(45deg, transparent 48%, rgba(229,160,0,0.04) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(90,61,138,0.04) 50%, transparent 52%);
+  background-size: 30px 30px;
+}
+.inv-image svg {
+  width: 60px; height: 60px;
+  fill: rgba(229, 160, 0, 0.15);
+  position: relative;
+  z-index: 1;
+}
+.inv-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  z-index: 2;
+}
+.inv-badge.new {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+.inv-badge.used {
+  background: var(--gray-400);
+  color: var(--white);
+}
+.inv-body {
+  padding: 24px;
+}
+.inv-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.inv-title svg { width: 22px; height: 22px; fill: var(--gold); }
+.inv-body > p {
+  font-size: 0.88rem;
+  color: var(--gray-300);
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+.inv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: gap 0.25s;
+}
+.inv-link:hover { gap: 10px; }
+
+/* ── FINANCING ── */
+.financing-section {
+  padding: 100px 0;
+  position: relative;
+}
+.financing-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple-border), transparent);
+}
+.financing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.financing-left h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  line-height: 1.15;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+.financing-left h2 .gold { color: var(--gold); }
+.financing-left > p {
+  color: var(--gray-300);
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+.financing-left > p strong { color: var(--white); font-weight: 600; }
+.check-list {
+  margin-bottom: 32px;
+}
+.check-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 0.92rem;
+  color: var(--gray-200);
+}
+.check-icon {
+  width: 22px; height: 22px;
+  background: rgba(229, 160, 0, 0.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.check-icon svg { width: 12px; height: 12px; fill: var(--gold); }
+.financing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.fin-card {
+  border-radius: 14px;
+  padding: 28px;
+  transition: transform 0.3s;
+}
+.fin-card:hover { transform: translateY(-3px); }
+.fin-card.purple {
+  background: linear-gradient(160deg, rgba(42, 31, 78, 0.8), rgba(26, 18, 53, 0.95));
+  border: 1px solid var(--purple-border);
+}
+.fin-card.gold-bg {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+.fin-card.dark {
+  background: rgba(18, 12, 38, 0.9);
+  border: 1px solid var(--purple-border);
+}
+.fin-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.fin-card.purple .fin-card-icon { background: rgba(229,160,0,0.12); }
+.fin-card.purple .fin-card-icon svg { fill: var(--gold); }
+.fin-card.gold-bg .fin-card-icon { background: rgba(12,7,24,0.15); }
+.fin-card.gold-bg .fin-card-icon svg { fill: var(--bg-deep); }
+.fin-card.dark .fin-card-icon { background: rgba(229,160,0,0.12); }
+.fin-card.dark .fin-card-icon svg { fill: var(--gold); }
+.fin-card-icon svg { width: 22px; height: 22px; }
+.fin-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.fin-card .big-num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2.2rem;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.fin-card .fin-label {
+  font-size: 0.82rem;
+  opacity: 0.8;
+}
+.fin-card p {
+  font-size: 0.82rem;
+  color: var(--gray-300);
+}
+.fin-card.gold-bg p { color: rgba(12,7,24,0.7); }
+
+/* ── PROCESS ── */
+.process-section {
+  padding: 100px 0;
+  position: relative;
+}
+.process-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple-border), transparent);
+}
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 12px;
+}
+.step {
+  text-align: center;
+}
+.step-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  margin-bottom: 22px;
+}
+.step-circle {
+  width: 72px; height: 72px;
+  background: linear-gradient(160deg, rgba(42, 31, 78, 0.9), rgba(26, 18, 53, 0.95));
+  border: 1px solid var(--purple-border);
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-circle svg { width: 28px; height: 28px; fill: var(--gold); }
+.step-num {
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 24px; height: 24px;
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.step h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.step p {
+  font-size: 0.85rem;
+  color: var(--gray-300);
+  line-height: 1.55;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+/* ── PROMISE ── */
+.promise-section {
+  padding: 100px 0;
+  position: relative;
+}
+.promise-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple-border), transparent);
+}
+.promise-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.stat-card {
+  border-radius: 14px;
+  padding: 28px;
+  transition: transform 0.3s;
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-card.purple {
+  background: linear-gradient(160deg, rgba(42, 31, 78, 0.8), rgba(26, 18, 53, 0.95));
+  border: 1px solid var(--purple-border);
+}
+.stat-card.gold-bg {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+.stat-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.stat-card.purple .stat-card-icon { background: rgba(229,160,0,0.12); }
+.stat-card.purple .stat-card-icon svg { fill: var(--gold); }
+.stat-card.gold-bg .stat-card-icon { background: rgba(12,7,24,0.15); }
+.stat-card.gold-bg .stat-card-icon svg { fill: var(--bg-deep); }
+.stat-card-icon svg { width: 22px; height: 22px; }
+.stat-card .stat-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.stat-card .stat-label {
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+.stat-card.gold-bg .stat-label { color: rgba(12,7,24,0.7); }
+.stars-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 18px;
+  background: linear-gradient(160deg, rgba(42,31,78,0.5), rgba(26,18,53,0.7));
+  border: 1px solid var(--purple-border);
+  border-radius: 12px;
+  grid-column: 1 / -1;
+}
+.stars { display: flex; gap: 4px; }
+.stars svg { width: 28px; height: 28px; fill: var(--gold); }
+.stars-text .star-value {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.stars-text .star-label {
+  font-size: 0.78rem;
+  color: var(--gray-300);
+}
+.promise-right h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  line-height: 1.15;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+.promise-right h2 .gold { color: var(--gold); }
+.promise-right p {
+  color: var(--gray-300);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* ── CONTACT ── */
+.contact-section {
+  padding: 100px 0;
+  position: relative;
+}
+.contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple-border), transparent);
+}
+.contact-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.contact-header h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+.contact-header h2 .gold { color: var(--gold); }
+.contact-header > p {
+  color: var(--gray-300);
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--purple-border);
+}
+.contact-info {
+  background: linear-gradient(170deg, #1e1545, #120c28);
+  padding: 40px 32px;
+}
+.contact-info h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.contact-item-icon {
+  width: 40px; height: 40px;
+  background: rgba(229,160,0,0.12);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-item-icon svg { width: 18px; height: 18px; fill: var(--gold); }
+.contact-item-label {
+  font-size: 0.78rem;
+  color: var(--gray-400);
+  margin-bottom: 2px;
+}
+.contact-item-value {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.response-card {
+  background: var(--gold);
+  color: var(--bg-deep);
+  border-radius: 12px;
+  padding: 22px;
+  margin-top: 20px;
+}
+.response-card .resp-label {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+.response-card .resp-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.8rem;
+}
+.contact-form-wrap {
+  background: var(--white);
+  padding: 40px 36px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2a2040;
+  margin-bottom: 6px;
+}
+.form-group label .req { color: #e53e3e; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: #f7f5fa;
+  border: 1.5px solid #e8e4f0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #2a2040;
+  transition: border-color 0.25s;
+  outline: none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #a098b0;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-group select { cursor: pointer; appearance: auto; }
+.btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 6px;
+}
+.btn-submit:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(229,160,0,0.3);
+}
+.btn-submit svg { width: 18px; height: 18px; fill: var(--bg-deep); }
+.form-disclaimer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #a098b0;
+  margin-top: 14px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 64px 0 0;
+  border-top: 1px solid var(--purple-border);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+.footer-brand p {
+  color: var(--gray-300);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  max-width: 340px;
+}
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+.social-icon {
+  width: 40px; height: 40px;
+  background: rgba(42, 31, 78, 0.6);
+  border: 1px solid var(--purple-border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s;
+}
+.social-icon:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.social-icon svg { width: 18px; height: 18px; fill: var(--gray-200); }
+.social-icon:hover svg { fill: var(--bg-deep); }
+.footer-col h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.footer-col a {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--gray-300);
+  padding: 5px 0;
+  transition: color 0.25s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--gray-300);
+  padding: 6px 0;
+}
+.footer-contact-item svg { width: 16px; height: 16px; fill: var(--gold); flex-shrink: 0; }
+.footer-bottom {
+  border-top: 1px solid var(--purple-border);
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--gray-400);
+}
+.footer-bottom-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-bottom-links a { transition: color 0.25s; }
+.footer-bottom-links a:hover { color: var(--gray-200); }
+
+/* ── WHATSAPP FLOAT ── */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 60px; height: 60px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.35);
+  z-index: 999;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.whatsapp-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
+}
+.whatsapp-btn svg { width: 30px; height: 30px; fill: var(--white); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .why-grid { grid-template-columns: repeat(3, 1fr); }
+  .financing-grid { grid-template-columns: 1fr; gap: 40px; }
+  .promise-grid { grid-template-columns: 1fr; gap: 48px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-call { display: none; }
+  .hamburger { display: flex; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .inventory-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .financing-cards { grid-template-columns: 1fr 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-form-wrap { padding: 28px 22px; }
+  .contact-info { padding: 32px 24px; }
+  .hero { min-height: auto; padding-top: calc(var(--nav-h) + 40px); padding-bottom: 60px; }
+  .diamonds { display: none; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+@media (max-width: 480px) {
+  .why-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .financing-cards { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero-buttons { flex-direction: column; align-items: flex-start; }
+}
+
+/* Mobile nav overlay */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: var(--nav-h); left: 0; right: 0; bottom: 0;
+  background: rgba(12, 7, 24, 0.97);
+  backdrop-filter: blur(16px);
+  z-index: 999;
+  padding: 32px 24px;
+}
+.mobile-nav.active { display: block; }
+.mobile-nav a {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 16px 0;
+  color: var(--gray-200);
+  border-bottom: 1px solid var(--purple-border);
+  transition: color 0.25s;
+}
+.mobile-nav a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#inicio" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+      </div>
+      TRACTOS Y MAX
+    </a>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#financiamiento">Financiamiento</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-actions">
+      <a href="tel:+525512345678" class="nav-call">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        Llamar
+      </a>
+      <a href="#contacto" class="btn-cotizar">Cotizar ahora</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#inicio" onclick="closeMobileNav()">Inicio</a>
+  <a href="#catalogo" onclick="closeMobileNav()">Catálogo</a>
+  <a href="#financiamiento" onclick="closeMobileNav()">Financiamiento</a>
+  <a href="#contacto" onclick="closeMobileNav()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Unidades disponibles ahora
+      </div>
+      <h1>Autos y camiones<br><span class="gold">listos para trabajar</span></h1>
+      <p class="hero-sub">Nuevos y seminuevos &nbsp;|&nbsp; Asesoría directa &nbsp;|&nbsp; Opciones de financiamiento</p>
+      <div class="hero-buttons">
+        <a href="#contacto" class="btn-primary">Solicitar cotización <span>›</span></a>
+        <a href="#catalogo" class="btn-outline">Ver opciones disponibles</a>
+      </div>
+      <div class="hero-call">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        ¿Dudas? Llámanos ahora
+      </div>
+    </div>
+  </div>
+  <div class="diamonds">
+    <div class="diamond diamond-1"></div>
+    <div class="diamond diamond-2"></div>
+    <div class="diamond diamond-3"></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why-section" id="porque">
+  <div class="container">
+    <div class="why-header reveal">
+      <h2>¿Por qué <span class="gold">TRACTOS Y MAX</span>?</h2>
+      <p>Más que vender, construimos relaciones comerciales basadas en confianza</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+        </div>
+        <h3>Unidades nuevas y seminuevas</h3>
+        <p>Amplio inventario disponible para entrega inmediata</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <h3>Revisión y respaldo</h3>
+        <p>Cada unidad pasa por inspección exhaustiva</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <h3>Atención personalizada</h3>
+        <p>Asesor dedicado durante todo el proceso</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+        </div>
+        <h3>Opciones de crédito</h3>
+        <p>Financiamiento flexible para tu situación</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path d="M19 7c0-1.1-.9-2-2-2h-3v2h3v2.65L13.52 14H10V9H6c-2.21 0-4 1.79-4 4v3h2c0 1.66 1.34 3 3 3s3-1.34 3-3h4.48L19 10.35V7zM7 17c-.55 0-1-.45-1-1h2c0 .55-.45 1-1 1z"/><path d="M5 6h5v2H5zm14 7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm0 4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+        </div>
+        <h3>Entrega rápida</h3>
+        <p>Gestión ágil para que estrenes pronto</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVENTORY -->
+<section class="inventory-section" id="catalogo">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="label-tag">NUESTRO INVENTARIO</span>
+      <h2>¿Qué buscas?</h2>
+      <p>Encuentra la unidad perfecta para tu negocio o uso personal</p>
+    </div>
+    <div class="inventory-grid">
+      <div class="inv-card reveal">
+        <div class="inv-image">
+          <span class="inv-badge new">Nuevo</span>
+          <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+        </div>
+        <div class="inv-body">
+          <div class="inv-title">
+            <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+            Autos Nuevos
+          </div>
+          <p>Últimos modelos con garantía de agencia. Estrena con respaldo total.</p>
+          <a href="#contacto" class="inv-link">Ver opciones →</a>
+        </div>
+      </div>
+      <div class="inv-card reveal">
+        <div class="inv-image">
+          <span class="inv-badge used">Seminuevo</span>
+          <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+        </div>
+        <div class="inv-body">
+          <div class="inv-title">
+            <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+            Autos Seminuevos
+          </div>
+          <p>Unidades seleccionadas, verificadas y listas para circular.</p>
+          <a href="#contacto" class="inv-link">Ver opciones →</a>
+        </div>
+      </div>
+      <div class="inv-card reveal">
+        <div class="inv-image">
+          <span class="inv-badge new">Nuevo</span>
+          <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+        </div>
+        <div class="inv-body">
+          <div class="inv-title">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            Camiones Nuevos
+          </div>
+          <p>Potencia y rendimiento para tu negocio. Flota disponible.</p>
+          <a href="#contacto" class="inv-link">Ver opciones →</a>
+        </div>
+      </div>
+      <div class="inv-card reveal">
+        <div class="inv-image">
+          <span class="inv-badge used">Seminuevo</span>
+          <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+        </div>
+        <div class="inv-body">
+          <div class="inv-title">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            Camiones Seminuevos
+          </div>
+          <p>Unidades de trabajo probadas, con historial verificado.</p>
+          <a href="#contacto" class="inv-link">Ver opciones →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCING -->
+<section class="financing-section" id="financiamiento">
+  <div class="container">
+    <div class="financing-grid">
+      <div class="financing-left reveal">
+        <span class="label-tag">FINANCIAMIENTO</span>
+        <h2>Hacemos posible tu<br><span class="gold">siguiente unidad</span></h2>
+        <p>Te ayudamos a estrenar o renovar tu unidad con planes de financiamiento flexibles, tanto para <strong>personas físicas</strong> como <strong>empresas</strong>.</p>
+        <ul class="check-list">
+          <li>
+            <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+            Tasas competitivas del mercado
+          </li>
+          <li>
+            <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+            Plazos desde 12 hasta 60 meses
+          </li>
+          <li>
+            <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+            Mínimo de requisitos
+          </li>
+          <li>
+            <span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+            Respuesta en 24-48 horas
+          </li>
+        </ul>
+        <a href="#contacto" class="btn-primary">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--bg-deep)"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+          Cotiza tu crédito
+        </a>
+      </div>
+      <div class="financing-cards reveal">
+        <div class="fin-card purple">
+          <div class="fin-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <h3>Personas Físicas</h3>
+          <p>Crédito personal para tu auto o camión particular</p>
+        </div>
+        <div class="fin-card purple">
+          <div class="fin-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+          </div>
+          <h3>Empresas</h3>
+          <p>Flotillas y unidades para tu operación comercial</p>
+        </div>
+        <div class="fin-card gold-bg">
+          <div class="big-num">+500</div>
+          <div class="fin-label">Unidades financiadas</div>
+        </div>
+        <div class="fin-card dark">
+          <div class="big-num">98%</div>
+          <div class="fin-label">Tasa de aprobación</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="proceso">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="label-tag">PROCESO SIMPLE</span>
+      <h2>¿Cómo funciona?</h2>
+      <p>En 4 pasos tienes tu unidad lista</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-icon-wrap">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+          </div>
+          <span class="step-num">1</span>
+        </div>
+        <h3>Contáctanos</h3>
+        <p>Cuéntanos qué tipo de unidad necesitas y para qué la usarás</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-icon-wrap">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          </div>
+          <span class="step-num">2</span>
+        </div>
+        <h3>Te mostramos opciones</h3>
+        <p>Seleccionamos las mejores alternativas según tu perfil y presupuesto</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-icon-wrap">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          </div>
+          <span class="step-num">3</span>
+        </div>
+        <h3>Definimos el pago</h3>
+        <p>Contado, crédito o el esquema que mejor funcione para ti</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-icon-wrap">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          <span class="step-num">4</span>
+        </div>
+        <h3>Entrega de tu unidad</h3>
+        <p>Coordinamos la entrega y te acompañamos hasta el final</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="promise-section" id="promesa">
+  <div class="container">
+    <div class="promise-grid">
+      <div class="reveal">
+        <div class="stats-grid">
+          <div class="stat-card purple">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            </div>
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Unidades verificadas</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M16.48 10.41c-.39.39-1.04.39-1.43 0l-4.47-4.46-7.05 7.04-.66-.63a3 3 0 010-4.24l4.24-4.24a3 3 0 014.24 0L16.48 9a1 1 0 010 1.41zm4.02 6.81L16.71 21H8l-4.71-4.71a2.5 2.5 0 010-3.54l.71-.7 4.47 4.46c.78.78 2.05.78 2.83 0l4.24-4.24.7.71a2.5 2.5 0 010 3.54l2.26.7z"/></svg>
+            </div>
+            <div class="stat-value">+1,200</div>
+            <div class="stat-label">Clientes satisfechos</div>
+          </div>
+          <div class="stat-card gold-bg">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            </div>
+            <div class="stat-value">10+</div>
+            <div class="stat-label">Años de experiencia</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+            </div>
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Atención disponible</div>
+          </div>
+          <div class="stars-row">
+            <div class="stars">
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <div class="stars-text">
+              <div class="star-value">4.9 / 5.0</div>
+              <div class="star-label">Calificación promedio</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="promise-right reveal">
+        <span class="label-tag">NUESTRA PROMESA</span>
+        <h2>Respaldo y confianza en<br><span class="gold">cada operación</span></h2>
+        <p>En TRACTOS Y MAX no solo vendemos vehículos. Construimos relaciones comerciales duraderas basadas en transparencia y cumplimiento.</p>
+        <p>Cada unidad que ofrecemos pasa por un proceso de verificación. Cada cliente recibe acompañamiento personalizado de principio a fin.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contacto">
+  <div class="container">
+    <div class="contact-header reveal">
+      <span class="label-tag">CONTÁCTANOS</span>
+      <h2>Tu próxima unidad está en <span class="gold">TRACTOS Y MAX</span></h2>
+      <p>Déjanos tus datos y un asesor te contactará para ayudarte a encontrar la unidad perfecta</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <h3>Información de contacto</h3>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Teléfono</div>
+            <div class="contact-item-value">+52 (55) 1234-5678</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 1.99 2H20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value">ventas@tractosymax.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Ubicación</div>
+            <div class="contact-item-value">Ciudad de México, MX</div>
+          </div>
+        </div>
+        <div class="response-card">
+          <div class="resp-label">Tiempo promedio de respuesta</div>
+          <div class="resp-value">2 horas</div>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre completo <span class="req">*</span></label>
+              <input type="text" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label>Teléfono <span class="req">*</span></label>
+              <input type="tel" placeholder="10 dígitos" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Correo electrónico</label>
+              <input type="email" placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
+              <label>¿Qué buscas?</label>
+              <select>
+                <option value="">Selecciona una opción</option>
+                <option value="auto-nuevo">Auto nuevo</option>
+                <option value="auto-seminuevo">Auto seminuevo</option>
+                <option value="camion-nuevo">Camión nuevo</option>
+                <option value="camion-seminuevo">Camión seminuevo</option>
+                <option value="financiamiento">Financiamiento</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mensaje (opcional)</label>
+            <textarea placeholder="Cuéntanos más sobre lo que necesitas..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            Quiero que me contacten
+          </button>
+          <p class="form-disclaimer">Al enviar aceptas que te contactemos por teléfono o WhatsApp</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#inicio" class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          </div>
+          TRACTOS Y MAX
+        </a>
+        <p>Tu socio confiable en la compra de autos y camiones nuevos y seminuevos. Más de 10 años respaldando a empresas y personas en México.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" class="social-icon" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="#inicio">Inicio</a>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#financiamiento">Financiamiento</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          +52 (55) 1234-5678
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 1.99 2H20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          ventas@tractosymax.com
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Ciudad de México, MX
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 TRACTOS Y MAX. Todos los derechos reservados.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Aviso de privacidad</a>
+        <a href="#">Términos y condiciones</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="#" class="whatsapp-btn" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// Mobile nav toggle
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  mobileNav.classList.toggle('active');
+  hamburger.classList.toggle('active');
+});
+function closeMobileNav() {
+  mobileNav.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+
+// Scroll reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Navbar shadow on scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) {
+    navbar.style.boxShadow = '0 4px 24px rgba(0,0,0,0.3)';
+  } else {
+    navbar.style.boxShadow = 'none';
+  }
+});
+
+// Form submit
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '¡Mensaje enviado!';
+  btn.style.background = '#25d366';
+  btn.style.color = '#fff';
+  setTimeout(() => {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:var(--bg-deep)"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Quiero que me contacten';
+    btn.style.background = '';
+    btn.style.color = '';
+    e.target.reset();
+  }, 3000);
+}
+</script>
+</body>
+</html>
