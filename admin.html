@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Administración | TRACTOS Y MAX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0f0a1e;
+  --bg-card: #1a1235;
+  --bg-input: #0c0718;
+  --border: #3d2d6b;
+  --border-focus: #5a3d8a;
+  --gold: #e5a000;
+  --gold-light: #f0b820;
+  --green: #25d366;
+  --red: #e54040;
+  --white: #ffffff;
+  --gray-100: #f0eef5;
+  --gray-200: #d4d0e0;
+  --gray-300: #a8a0b8;
+  --gray-400: #78708a;
+  --radius: 12px;
+}
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.hidden { display: none !important; }
+
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(229,160,0,0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(90,61,138,0.18), transparent 32%),
+    var(--bg);
+}
+.auth-card {
+  width: min(100%, 440px);
+  background: rgba(26, 18, 53, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.auth-card h1 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+.auth-card p {
+  color: var(--gray-300);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+.auth-help {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(12, 7, 24, 0.8);
+  border: 1px solid rgba(61, 45, 107, 0.7);
+  color: var(--gray-200);
+  font-size: 0.84rem;
+}
+.auth-feedback {
+  min-height: 24px;
+  margin-top: 14px;
+  color: var(--gold-light);
+  font-size: 0.84rem;
+}
+.auth-feedback.error { color: #ff8d8d; }
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(26, 18, 53, 0.72);
+}
+.admin-topbar strong {
+  display: block;
+  font-size: 0.92rem;
+}
+.admin-topbar span {
+  color: var(--gray-300);
+  font-size: 0.84rem;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(37, 211, 102, 0.12);
+  color: #8ff0b3;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.status-pill::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Layout */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 260px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px 24px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.sidebar-logo .icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--gold), #c48800);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.sidebar-badge {
+  font-size: 0.65rem;
+  background: var(--gold);
+  color: var(--bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  margin-left: auto;
+}
+.sidebar nav { padding: 0 12px; }
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--gray-300);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-bottom: 2px;
+}
+.sidebar nav a:hover { background: rgba(90,61,138,0.15); color: var(--white); }
+.sidebar nav a.active { background: rgba(229,160,0,0.1); color: var(--gold); }
+.sidebar nav a svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 32px 40px;
+  max-width: 900px;
+}
+
+/* Header */
+.page-header {
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.page-header p { color: var(--gray-300); font-size: 0.9rem; }
+
+/* Sections */
+.admin-section {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.admin-section.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title svg { width: 18px; height: 18px; fill: var(--gold); }
+
+/* Form elements */
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-200);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.form-group textarea { min-height: 80px; resize: vertical; }
+.form-group select option { background: var(--bg-input); }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Inventory cards */
+.inv-admin-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.inv-admin-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.inv-admin-card .card-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+.inv-admin-card .btn-remove {
+  background: rgba(229,64,64,0.1);
+  border: 1px solid rgba(229,64,64,0.3);
+  color: var(--red);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.inv-admin-card .btn-remove:hover {
+  background: rgba(229,64,64,0.2);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg);
+}
+.btn-primary:hover { background: var(--gold-light); }
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--gray-200);
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-success {
+  background: var(--green);
+  color: var(--bg);
+}
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+.btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--green);
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 999;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Image upload area */
+.img-upload {
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  margin-bottom: 8px;
+}
+.img-upload:hover { border-color: var(--gold); }
+.img-upload input { display: none; }
+.img-upload p { color: var(--gray-400); font-size: 0.82rem; margin-top: 4px; }
+.img-upload .icon { font-size: 1.5rem; margin-bottom: 4px; }
+.img-preview {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; padding: 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .mobile-nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 12px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-nav a {
+    white-space: nowrap;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--gray-300);
+    text-decoration: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .mobile-nav a.active { background: rgba(229,160,0,0.1); color: var(--gold); border-color: var(--gold); }
+}
+@media (min-width: 769px) {
+  .mobile-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<section class="auth-shell" id="auth-shell">
+  <div class="auth-card">
+    <div class="sidebar-logo" style="padding:0 0 20px;margin-bottom:20px">
+      <div class="icon">T</div>
+      TRACTOS Y MAX
+      <span class="sidebar-badge">ADMIN</span>
+    </div>
+    <h1>Acceso privado</h1>
+    <p>Inicia sesion con tu cuenta administradora para editar el sitio en produccion.</p>
+    <form id="login-form">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="admin@tudominio.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Contrasena</label>
+        <input type="password" id="login-password" placeholder="Tu contrasena segura" autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary" type="submit" id="login-button" style="width:100%;justify-content:center;margin-top:6px">
+        Entrar al panel
+      </button>
+    </form>
+    <div class="auth-feedback" id="auth-feedback"></div>
+    <div class="auth-help">
+      Configura tu proyecto en <code>site-config.js</code>, ejecuta <code>supabase-setup.sql</code> en Supabase y luego crea tu usuario admin desde Authentication.
+    </div>
+  </div>
+</section>
+
+<div class="admin-layout hidden" id="admin-app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="icon">T</div>
+      TRACTOS Y MAX
+      <span class="sidebar-badge">ADMIN</span>
+    </div>
+    <nav>
+      <a href="#" data-section="hero" class="active">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        Inicio / Hero
+      </a>
+      <a href="#" data-section="inventario">
+        <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+        Inventario
+      </a>
+      <a href="#" data-section="financiamiento">
+        <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+        Financiamiento
+      </a>
+      <a href="#" data-section="contacto">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 1.99 2H20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Contacto
+      </a>
+      <a href="#" data-section="estadisticas">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+        Estadisticas
+      </a>
+      <a href="#" data-section="whatsapp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="index.html" style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px;">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        Ver sitio web
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+    <div class="admin-topbar">
+      <div>
+        <strong id="session-email">Sesion activa</strong>
+        <span id="session-meta">Panel conectado a Supabase</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="status-pill">Conectado</span>
+        <button class="btn btn-outline" type="button" id="logout-button">Cerrar sesion</button>
+      </div>
+    </div>
+    <!-- Mobile nav -->
+    <div class="mobile-nav">
+      <a href="#" data-section="hero" class="active">Inicio</a>
+      <a href="#" data-section="inventario">Inventario</a>
+      <a href="#" data-section="financiamiento">Financiamiento</a>
+      <a href="#" data-section="contacto">Contacto</a>
+      <a href="#" data-section="estadisticas">Estadisticas</a>
+      <a href="#" data-section="whatsapp">WhatsApp</a>
+    </div>
+
+    <!-- HERO Section -->
+    <section id="sec-hero" class="admin-section active">
+      <div class="page-header">
+        <h1>Inicio / Hero</h1>
+        <p>Edita el contenido principal que ven los visitantes al entrar a tu sitio</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Texto principal
+        </div>
+        <div class="form-group">
+          <label>Badge / Etiqueta superior</label>
+          <input type="text" id="hero-badge" placeholder="Ej: Atendiendo en todo Mexico">
+        </div>
+        <div class="form-group">
+          <label>Titulo (usa {gold} para texto dorado)</label>
+          <input type="text" id="hero-title" placeholder="Ej: Tu socio para {gold}autos y camiones{/gold}">
+        </div>
+        <div class="form-group">
+          <label>Subtitulo</label>
+          <textarea id="hero-subtitle" placeholder="Descripcion debajo del titulo"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Texto boton principal</label>
+            <input type="text" id="hero-btn1" placeholder="Ej: Ver inventario">
+          </div>
+          <div class="form-group">
+            <label>Texto boton secundario</label>
+            <input type="text" id="hero-btn2" placeholder="Ej: Hablar con asesor">
+          </div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveSection('hero')">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+    </section>
+
+    <!-- INVENTARIO Section -->
+    <section id="sec-inventario" class="admin-section">
+      <div class="page-header">
+        <h1>Inventario</h1>
+        <p>Administra las categorias de vehiculos que se muestran en el catalogo</p>
+      </div>
+      <div id="inventario-list"></div>
+      <div class="btn-group">
+        <button class="btn btn-outline" onclick="addInventoryItem()">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Agregar categoria
+        </button>
+        <button class="btn btn-primary" onclick="saveSection('inventario')">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+    </section>
+
+    <!-- FINANCIAMIENTO Section -->
+    <section id="sec-financiamiento" class="admin-section">
+      <div class="page-header">
+        <h1>Financiamiento</h1>
+        <p>Edita la informacion de financiamiento que se muestra en el sitio</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+          Texto principal
+        </div>
+        <div class="form-group">
+          <label>Titulo</label>
+          <input type="text" id="fin-title" placeholder="Ej: Hacemos posible tu siguiente unidad">
+        </div>
+        <div class="form-group">
+          <label>Descripcion</label>
+          <textarea id="fin-desc" placeholder="Descripcion del financiamiento"></textarea>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Lista de beneficios (uno por linea)
+        </div>
+        <div class="form-group">
+          <label>Beneficios</label>
+          <textarea id="fin-benefits" rows="5" placeholder="Tasas competitivas&#10;Plazos desde 12 hasta 60 meses&#10;Minimo de requisitos"></textarea>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Tarjetas de financiamiento</div>
+        <div id="fin-cards-list"></div>
+        <button class="btn btn-outline" onclick="addFinCard()" style="margin-top:12px">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Agregar tarjeta
+        </button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveSection('financiamiento')">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+    </section>
+
+    <!-- CONTACTO Section -->
+    <section id="sec-contacto" class="admin-section">
+      <div class="page-header">
+        <h1>Contacto</h1>
+        <p>Actualiza la informacion de contacto del negocio</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          Datos de contacto
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Telefono</label>
+            <input type="text" id="contact-phone" placeholder="+52 (55) 1234-5678">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="contact-email" placeholder="ventas@tractosymax.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Ubicacion</label>
+          <input type="text" id="contact-location" placeholder="Ciudad de Mexico, MX">
+        </div>
+        <div class="form-group">
+          <label>Tiempo de respuesta</label>
+          <input type="text" id="contact-response" placeholder="2 horas">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10h5v-2h-5c-4.34 0-8-3.36-8-7.5C4 7.86 7.58 4 12 4s8 3.86 8 8.5c0 2.24-1.34 3.95-2.54 5.07-.5.47-.96.82-1.27 1.05-.16.11-.28.2-.35.24l-.11.08v2.03c.28-.13.63-.32 1.03-.58.67-.44 1.48-1.07 2.24-1.86C20.67 16.73 22 14.62 22 12c0-5.52-4.48-10-10-10zm0 13c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+          Redes sociales
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Facebook URL</label>
+            <input type="text" id="contact-facebook" placeholder="https://facebook.com/tractosymax">
+          </div>
+          <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="text" id="contact-instagram" placeholder="https://instagram.com/tractosymax">
+          </div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveSection('contacto')">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+    </section>
+
+    <!-- ESTADISTICAS Section -->
+    <section id="sec-estadisticas" class="admin-section">
+      <div class="page-header">
+        <h1>Estadisticas</h1>
+        <p>Modifica los numeros que se muestran en la seccion de confianza</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          Numeros de confianza
+        </div>
+        <div id="stats-list"></div>
+        <button class="btn btn-outline" onclick="addStat()" style="margin-top:12px">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Agregar estadistica
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-title">Calificacion</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Puntuacion (ej: 4.9 / 5.0)</label>
+            <input type="text" id="stats-rating" placeholder="4.9 / 5.0">
+          </div>
+          <div class="form-group">
+            <label>Etiqueta</label>
+            <input type="text" id="stats-rating-label" placeholder="Calificacion promedio">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Seccion "Nuestra Promesa"</div>
+        <div class="form-group">
+          <label>Titulo</label>
+          <input type="text" id="promise-title" placeholder="Respaldo y confianza en cada operacion">
+        </div>
+        <div class="form-group">
+          <label>Parrafo 1</label>
+          <textarea id="promise-p1" placeholder="Primer parrafo..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Parrafo 2</label>
+          <textarea id="promise-p2" placeholder="Segundo parrafo..."></textarea>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveSection('estadisticas')">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+    </section>
+
+    <!-- WHATSAPP Section -->
+    <section id="sec-whatsapp" class="admin-section">
+      <div class="page-header">
+        <h1>WhatsApp</h1>
+        <p>Configura el boton de WhatsApp flotante</p>
+      </div>
+      <div class="card">
+        <div class="card-title">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          Configuracion
+        </div>
+        <div class="form-group">
+          <label>Numero de WhatsApp (con codigo de pais, sin +)</label>
+          <input type="text" id="wa-number" placeholder="5215512345678">
+        </div>
+        <div class="form-group">
+          <label>Mensaje predeterminado</label>
+          <textarea id="wa-message" placeholder="Hola, me interesa conocer su inventario de vehiculos..."></textarea>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="saveSection('whatsapp')">
+          <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast">Cambios guardados correctamente</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./site-config.js"></script>
+<script>
+// ── Default Data ──
+const DEFAULTS = {
+  hero: {
+    badge: 'Atendiendo en todo Mexico',
+    title: 'Tu socio para {gold}autos y camiones{/gold} nuevos y seminuevos',
+    subtitle: 'Mas de 10 anos conectando empresas y personas con las mejores unidades del mercado. Financiamiento flexible, asesoria personalizada y entrega rapida.',
+    btn1: 'Ver inventario',
+    btn2: 'Hablar con asesor'
+  },
+  inventario: [
+    { nombre: 'Autos Nuevos', tipo: 'nuevo', categoria: 'auto', descripcion: 'Ultimos modelos con garantia de agencia. Estrena con respaldo total.', imagen: '' },
+    { nombre: 'Autos Seminuevos', tipo: 'seminuevo', categoria: 'auto', descripcion: 'Unidades seleccionadas, verificadas y listas para circular.', imagen: '' },
+    { nombre: 'Camiones Nuevos', tipo: 'nuevo', categoria: 'camion', descripcion: 'Potencia y rendimiento para tu negocio. Flota disponible.', imagen: '' },
+    { nombre: 'Camiones Seminuevos', tipo: 'seminuevo', categoria: 'camion', descripcion: 'Unidades de trabajo probadas, con historial verificado.', imagen: '' }
+  ],
+  financiamiento: {
+    title: 'Hacemos posible tu siguiente unidad',
+    desc: 'Te ayudamos a estrenar o renovar tu unidad con planes de financiamiento flexibles, tanto para personas fisicas como empresas.',
+    benefits: 'Tasas competitivas del mercado\nPlazos desde 12 hasta 60 meses\nMinimo de requisitos\nRespuesta en 24-48 horas',
+    cards: [
+      { title: 'Enganche desde', value: '10%', label: 'del valor total', desc: 'Inicia con un enganche accesible' },
+      { title: 'Hasta', value: '60', label: 'meses de plazo', desc: 'Elige el plazo que mejor se adapte' },
+      { title: 'Respuesta en', value: '48h', label: 'horas habiles', desc: 'Proceso agil y sin burocracia' }
+    ]
+  },
+  contacto: {
+    phone: '+52 (55) 1234-5678',
+    email: 'ventas@tractosymax.com',
+    location: 'Ciudad de Mexico, MX',
+    response: '2 horas',
+    facebook: '',
+    instagram: ''
+  },
+  estadisticas: {
+    items: [
+      { value: '100%', label: 'Unidades verificadas' },
+      { value: '+1,200', label: 'Clientes satisfechos' },
+      { value: '10+', label: 'Anos de experiencia' },
+      { value: '24/7', label: 'Atencion disponible' }
+    ],
+    rating: '4.9 / 5.0',
+    ratingLabel: 'Calificacion promedio',
+    promiseTitle: 'Respaldo y confianza en cada operacion',
+    promiseP1: 'En TRACTOS Y MAX no solo vendemos vehiculos. Construimos relaciones comerciales duraderas basadas en transparencia y cumplimiento.',
+    promiseP2: 'Cada unidad que ofrecemos pasa por un proceso de verificacion. Cada cliente recibe acompanamiento personalizado de principio a fin.'
+  },
+  whatsapp: {
+    number: '5215512345678',
+    message: 'Hola, me interesa conocer su inventario de vehiculos'
+  }
+};
+
+const CONFIG = window.TYM_CONFIG || {};
+const SECTION_KEYS = Object.keys(DEFAULTS);
+const ADMIN_EMAILS = (CONFIG.adminEmails || []).map((email) => String(email).trim().toLowerCase());
+const authShell = document.getElementById('auth-shell');
+const adminApp = document.getElementById('admin-app');
+const authFeedback = document.getElementById('auth-feedback');
+const loginForm = document.getElementById('login-form');
+const loginButton = document.getElementById('login-button');
+const logoutButton = document.getElementById('logout-button');
+const sessionEmail = document.getElementById('session-email');
+const sessionMeta = document.getElementById('session-meta');
+const contentTable = CONFIG.siteContentTable || 'site_content';
+
+let supabaseClient = null;
+let appState = cloneData(DEFAULTS);
+let currentSession = null;
+let isHydratingSession = false;
+let loginInFlight = false;
+
+function cloneData(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function isSupabaseReady() {
+  return Boolean(
+    CONFIG.supabaseUrl &&
+    CONFIG.supabaseAnonKey &&
+    !CONFIG.supabaseUrl.includes('YOUR_PROJECT_ID') &&
+    !CONFIG.supabaseAnonKey.includes('YOUR_SUPABASE_ANON_KEY')
+  );
+}
+
+function getData(key) {
+  return appState[key];
+}
+
+function setData(key, value) {
+  appState[key] = value;
+}
+
+function setAuthFeedback(message, isError) {
+  authFeedback.textContent = message || '';
+  authFeedback.classList.toggle('error', Boolean(isError));
+}
+
+function setLoginLoading(isLoading) {
+  loginButton.disabled = isLoading;
+  loginButton.textContent = isLoading ? 'Entrando...' : 'Entrar al panel';
+}
+
+function isAllowedAdmin(email) {
+  if (!ADMIN_EMAILS.length) return true;
+  return ADMIN_EMAILS.includes(String(email || '').trim().toLowerCase());
+}
+
+function showAuth() {
+  authShell.classList.remove('hidden');
+  adminApp.classList.add('hidden');
+}
+
+function showAdmin() {
+  authShell.classList.add('hidden');
+  adminApp.classList.remove('hidden');
+}
+
+function initSupabase() {
+  if (!isSupabaseReady() || !window.supabase) return null;
+  if (!supabaseClient) {
+    supabaseClient = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey);
+  }
+  return supabaseClient;
+}
+
+async function fetchRemoteState() {
+  const client = initSupabase();
+  if (!client) return cloneData(DEFAULTS);
+
+  const { data, error } = await client
+    .from(contentTable)
+    .select('section, content')
+    .in('section', SECTION_KEYS);
+
+  if (error) throw error;
+
+  const nextState = cloneData(DEFAULTS);
+  (data || []).forEach((row) => {
+    nextState[row.section] = row.content;
+  });
+  return nextState;
+}
+
+async function persistSection(section) {
+  const client = initSupabase();
+  if (!client) {
+    throw new Error('Configura site-config.js con tus credenciales de Supabase.');
+  }
+
+  const payload = {
+    section,
+    content: appState[section]
+  };
+
+  const { error } = await client
+    .from(contentTable)
+    .upsert(payload, { onConflict: 'section' });
+
+  if (error) throw error;
+}
+
+// ── Toast ──
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg || 'Cambios guardados correctamente';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ── Navigation ──
+document.querySelectorAll('[data-section]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const section = link.dataset.section;
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('sec-' + section).classList.add('active');
+    document.querySelectorAll('[data-section]').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll(`[data-section="${section}"]`).forEach(l => l.classList.add('active'));
+  });
+});
+
+// ── Load Hero ──
+function loadHero() {
+  const data = getData('hero');
+  document.getElementById('hero-badge').value = data.badge || '';
+  document.getElementById('hero-title').value = data.title || '';
+  document.getElementById('hero-subtitle').value = data.subtitle || '';
+  document.getElementById('hero-btn1').value = data.btn1 || '';
+  document.getElementById('hero-btn2').value = data.btn2 || '';
+}
+
+// ── Load Inventario ──
+function loadInventario() {
+  const data = getData('inventario');
+  const container = document.getElementById('inventario-list');
+  container.innerHTML = '';
+  data.forEach((item, i) => {
+    container.innerHTML += `
+      <div class="inv-admin-card">
+        <div class="card-header">
+          <h3>#${i + 1} — ${item.nombre || 'Nueva categoria'}</h3>
+          <button class="btn-remove" onclick="removeInventoryItem(${i})">Eliminar</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" class="inv-nombre" value="${item.nombre || ''}" placeholder="Ej: Autos Nuevos">
+          </div>
+          <div class="form-group">
+            <label>Tipo</label>
+            <select class="inv-tipo">
+              <option value="nuevo" ${item.tipo === 'nuevo' ? 'selected' : ''}>Nuevo</option>
+              <option value="seminuevo" ${item.tipo === 'seminuevo' ? 'selected' : ''}>Seminuevo</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Categoria</label>
+            <select class="inv-categoria">
+              <option value="auto" ${item.categoria === 'auto' ? 'selected' : ''}>Auto</option>
+              <option value="camion" ${item.categoria === 'camion' ? 'selected' : ''}>Camion</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>URL de imagen (opcional)</label>
+            <input type="text" class="inv-imagen" value="${item.imagen || ''}" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descripcion</label>
+          <textarea class="inv-descripcion" placeholder="Describe esta categoria...">${item.descripcion || ''}</textarea>
+        </div>
+      </div>`;
+  });
+}
+
+function addInventoryItem() {
+  const data = getData('inventario');
+  data.push({ nombre: '', tipo: 'nuevo', categoria: 'auto', descripcion: '', imagen: '' });
+  setData('inventario', data);
+  loadInventario();
+}
+
+function removeInventoryItem(index) {
+  const data = getData('inventario');
+  data.splice(index, 1);
+  setData('inventario', data);
+  loadInventario();
+}
+
+// ── Load Financiamiento ──
+function loadFinanciamiento() {
+  const data = getData('financiamiento');
+  document.getElementById('fin-title').value = data.title || '';
+  document.getElementById('fin-desc').value = data.desc || '';
+  document.getElementById('fin-benefits').value = data.benefits || '';
+  loadFinCards(data.cards || []);
+}
+
+function loadFinCards(cards) {
+  const container = document.getElementById('fin-cards-list');
+  container.innerHTML = '';
+  cards.forEach((card, i) => {
+    container.innerHTML += `
+      <div class="inv-admin-card">
+        <div class="card-header">
+          <h3>Tarjeta #${i + 1}</h3>
+          <button class="btn-remove" onclick="removeFinCard(${i})">Eliminar</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titulo</label>
+            <input type="text" class="fc-title" value="${card.title || ''}" placeholder="Ej: Enganche desde">
+          </div>
+          <div class="form-group">
+            <label>Valor grande</label>
+            <input type="text" class="fc-value" value="${card.value || ''}" placeholder="Ej: 10%">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Etiqueta</label>
+            <input type="text" class="fc-label" value="${card.label || ''}" placeholder="Ej: del valor total">
+          </div>
+          <div class="form-group">
+            <label>Descripcion</label>
+            <input type="text" class="fc-desc" value="${card.desc || ''}" placeholder="Breve descripcion">
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function addFinCard() {
+  const data = getData('financiamiento');
+  data.cards = data.cards || [];
+  data.cards.push({ title: '', value: '', label: '', desc: '' });
+  setData('financiamiento', data);
+  loadFinanciamiento();
+}
+
+function removeFinCard(index) {
+  const data = getData('financiamiento');
+  data.cards.splice(index, 1);
+  setData('financiamiento', data);
+  loadFinanciamiento();
+}
+
+// ── Load Contacto ──
+function loadContacto() {
+  const data = getData('contacto');
+  document.getElementById('contact-phone').value = data.phone || '';
+  document.getElementById('contact-email').value = data.email || '';
+  document.getElementById('contact-location').value = data.location || '';
+  document.getElementById('contact-response').value = data.response || '';
+  document.getElementById('contact-facebook').value = data.facebook || '';
+  document.getElementById('contact-instagram').value = data.instagram || '';
+}
+
+// ── Load Estadisticas ──
+function loadEstadisticas() {
+  const data = getData('estadisticas');
+  document.getElementById('stats-rating').value = data.rating || '';
+  document.getElementById('stats-rating-label').value = data.ratingLabel || '';
+  document.getElementById('promise-title').value = data.promiseTitle || '';
+  document.getElementById('promise-p1').value = data.promiseP1 || '';
+  document.getElementById('promise-p2').value = data.promiseP2 || '';
+  loadStatsList(data.items || []);
+}
+
+function loadStatsList(items) {
+  const container = document.getElementById('stats-list');
+  container.innerHTML = '';
+  items.forEach((item, i) => {
+    container.innerHTML += `
+      <div class="inv-admin-card">
+        <div class="card-header">
+          <h3>Estadistica #${i + 1}</h3>
+          <button class="btn-remove" onclick="removeStat(${i})">Eliminar</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Valor</label>
+            <input type="text" class="stat-value" value="${item.value || ''}" placeholder="Ej: +1,200">
+          </div>
+          <div class="form-group">
+            <label>Etiqueta</label>
+            <input type="text" class="stat-label" value="${item.label || ''}" placeholder="Ej: Clientes satisfechos">
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function addStat() {
+  const data = getData('estadisticas');
+  data.items.push({ value: '', label: '' });
+  setData('estadisticas', data);
+  loadEstadisticas();
+}
+
+function removeStat(index) {
+  const data = getData('estadisticas');
+  data.items.splice(index, 1);
+  setData('estadisticas', data);
+  loadEstadisticas();
+}
+
+// ── Load WhatsApp ──
+function loadWhatsapp() {
+  const data = getData('whatsapp');
+  document.getElementById('wa-number').value = data.number || '';
+  document.getElementById('wa-message').value = data.message || '';
+}
+
+// ── Save Section ──
+async function saveSection(section) {
+  switch (section) {
+    case 'hero':
+      setData('hero', {
+        badge: document.getElementById('hero-badge').value,
+        title: document.getElementById('hero-title').value,
+        subtitle: document.getElementById('hero-subtitle').value,
+        btn1: document.getElementById('hero-btn1').value,
+        btn2: document.getElementById('hero-btn2').value
+      });
+      break;
+
+    case 'inventario': {
+      const cards = document.querySelectorAll('#inventario-list .inv-admin-card');
+      const items = [];
+      cards.forEach(card => {
+        items.push({
+          nombre: card.querySelector('.inv-nombre').value,
+          tipo: card.querySelector('.inv-tipo').value,
+          categoria: card.querySelector('.inv-categoria').value,
+          descripcion: card.querySelector('.inv-descripcion').value,
+          imagen: card.querySelector('.inv-imagen').value
+        });
+      });
+      setData('inventario', items);
+      break;
+    }
+
+    case 'financiamiento': {
+      const fcards = document.querySelectorAll('#fin-cards-list .inv-admin-card');
+      const finCards = [];
+      fcards.forEach(card => {
+        finCards.push({
+          title: card.querySelector('.fc-title').value,
+          value: card.querySelector('.fc-value').value,
+          label: card.querySelector('.fc-label').value,
+          desc: card.querySelector('.fc-desc').value
+        });
+      });
+      setData('financiamiento', {
+        title: document.getElementById('fin-title').value,
+        desc: document.getElementById('fin-desc').value,
+        benefits: document.getElementById('fin-benefits').value,
+        cards: finCards
+      });
+      break;
+    }
+
+    case 'contacto':
+      setData('contacto', {
+        phone: document.getElementById('contact-phone').value,
+        email: document.getElementById('contact-email').value,
+        location: document.getElementById('contact-location').value,
+        response: document.getElementById('contact-response').value,
+        facebook: document.getElementById('contact-facebook').value,
+        instagram: document.getElementById('contact-instagram').value
+      });
+      break;
+
+    case 'estadisticas': {
+      const statCards = document.querySelectorAll('#stats-list .inv-admin-card');
+      const statItems = [];
+      statCards.forEach(card => {
+        statItems.push({
+          value: card.querySelector('.stat-value').value,
+          label: card.querySelector('.stat-label').value
+        });
+      });
+      setData('estadisticas', {
+        items: statItems,
+        rating: document.getElementById('stats-rating').value,
+        ratingLabel: document.getElementById('stats-rating-label').value,
+        promiseTitle: document.getElementById('promise-title').value,
+        promiseP1: document.getElementById('promise-p1').value,
+        promiseP2: document.getElementById('promise-p2').value
+      });
+      break;
+    }
+
+    case 'whatsapp':
+      setData('whatsapp', {
+        number: document.getElementById('wa-number').value,
+        message: document.getElementById('wa-message').value
+      });
+      break;
+  }
+
+  try {
+    await persistSection(section);
+    showToast('Cambios guardados en Supabase');
+  } catch (error) {
+    console.error(error);
+    showToast('No se pudo guardar: ' + (error.message || 'error inesperado'));
+  }
+}
+
+function renderAllSections() {
+  loadHero();
+  loadInventario();
+  loadFinanciamiento();
+  loadContacto();
+  loadEstadisticas();
+  loadWhatsapp();
+}
+
+async function hydrateAdmin(session) {
+  if (isHydratingSession) return;
+  isHydratingSession = true;
+
+  try {
+  if (!isAllowedAdmin(session?.user?.email)) {
+    const client = initSupabase();
+    if (client) await client.auth.signOut();
+    throw new Error('Tu cuenta inicio sesion, pero no tiene permisos de administracion.');
+  }
+
+  currentSession = session;
+  sessionEmail.textContent = session?.user?.email || 'Sesion activa';
+  sessionMeta.textContent = 'Panel conectado a Supabase';
+  appState = await fetchRemoteState();
+  renderAllSections();
+  showAdmin();
+  } finally {
+    isHydratingSession = false;
+  }
+}
+
+async function handleLogin(event) {
+  event.preventDefault();
+  if (loginInFlight) return;
+
+  const client = initSupabase();
+  if (!client) {
+    setAuthFeedback('Primero agrega tu URL y anon key en site-config.js.', true);
+    return;
+  }
+
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  loginInFlight = true;
+  setLoginLoading(true);
+  setAuthFeedback('Verificando acceso...');
+
+  const { data, error } = await client.auth.signInWithPassword({ email, password });
+
+  loginInFlight = false;
+  setLoginLoading(false);
+
+  if (error) {
+    setAuthFeedback(error.message || 'No fue posible iniciar sesion.', true);
+    return;
+  }
+
+  try {
+    setAuthFeedback('');
+    await hydrateAdmin(data.session);
+  } catch (authzError) {
+    setAuthFeedback(authzError.message || 'No tienes permisos para entrar al panel.', true);
+  }
+}
+
+async function handleLogout() {
+  const client = initSupabase();
+  if (!client) return;
+  await client.auth.signOut();
+  currentSession = null;
+  showAuth();
+}
+
+async function initAdmin() {
+  loginForm.addEventListener('submit', handleLogin);
+  logoutButton.addEventListener('click', handleLogout);
+
+  const client = initSupabase();
+  if (!client) {
+    showAuth();
+    setAuthFeedback('Falta conectar Supabase antes de habilitar este panel.', true);
+    return;
+  }
+
+  client.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_OUT' || !session) {
+      currentSession = null;
+      setLoginLoading(false);
+      showAuth();
+      return;
+    }
+    if (
+      !isHydratingSession &&
+      (!currentSession || currentSession.access_token !== session.access_token)
+    ) {
+      try {
+        await hydrateAdmin(session);
+      } catch (authzError) {
+        setAuthFeedback(authzError.message || 'No tienes permisos para entrar al panel.', true);
+      }
+    }
+  });
+
+  const { data, error } = await client.auth.getSession();
+  if (error) {
+    console.error(error);
+    showAuth();
+    return;
+  }
+
+  if (data.session) {
+    try {
+      await hydrateAdmin(data.session);
+    } catch (authzError) {
+      setAuthFeedback(authzError.message || 'No tienes permisos para entrar al panel.', true);
+    }
+  } else {
+    showAuth();
+  }
+}
+
+initAdmin();
+</script>
+</body>
+</html>

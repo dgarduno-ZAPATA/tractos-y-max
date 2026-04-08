@@ -1024,6 +1024,17 @@ button, input, select, textarea { font-family: inherit; }
 }
 .footer-bottom-links a { transition: color 0.25s; }
 .footer-bottom-links a:hover { color: var(--gray-200); }
+.admin-access-link {
+  color: var(--gray-400);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.admin-access-link:hover {
+  color: var(--gold);
+  opacity: 1;
+}
 
 /* ── WHATSAPP FLOAT ── */
 .whatsapp-btn {
@@ -1584,6 +1595,7 @@ button, input, select, textarea { font-family: inherit; }
       <span>&copy; 2026 TRACTOS Y MAX. Todos los derechos reservados.</span>
       <div class="footer-bottom-links">
         <a href="#">Aviso de privacidad</a>
+        <a href="admin.html" class="admin-access-link">Acceso</a>
         <a href="#">Términos y condiciones</a>
       </div>
     </div>
@@ -1595,6 +1607,8 @@ button, input, select, textarea { font-family: inherit; }
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./site-config.js"></script>
 <script>
 // Mobile nav toggle
 const hamburger = document.getElementById('hamburger');
@@ -1646,6 +1660,232 @@ function handleSubmit(e) {
     e.target.reset();
   }, 3000);
 }
+
+// ── Dynamic Content: Load data from Supabase ──
+(async function loadAdminData() {
+  const CONFIG = window.TYM_CONFIG || {};
+  const hasSupabaseConfig = Boolean(
+    CONFIG.supabaseUrl &&
+    CONFIG.supabaseAnonKey &&
+    !CONFIG.supabaseUrl.includes('YOUR_PROJECT_ID') &&
+    !CONFIG.supabaseAnonKey.includes('YOUR_SUPABASE_ANON_KEY') &&
+    window.supabase
+  );
+
+  async function getRemoteContent() {
+    if (!hasSupabaseConfig) return {};
+
+    const client = window.supabase.createClient(
+      CONFIG.supabaseUrl,
+      CONFIG.supabaseAnonKey
+    );
+
+    const { data, error } = await client
+      .from(CONFIG.siteContentTable || 'site_content')
+      .select('section, content');
+
+    if (error) {
+      console.error('No se pudo cargar contenido remoto:', error.message);
+      return {};
+    }
+
+    return (data || []).reduce((acc, row) => {
+      acc[row.section] = row.content;
+      return acc;
+    }, {});
+  }
+
+  function getLocalFallback(key) {
+    const stored = localStorage.getItem('tym_' + key);
+    return stored ? JSON.parse(stored) : null;
+  }
+
+  const remoteContent = await getRemoteContent();
+  function get(key) {
+    return remoteContent[key] || getLocalFallback(key);
+  }
+
+  // Helper: SVG icons
+  const carSvg = '<svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>';
+  const truckSvg = '<svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9 1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>';
+
+  // ── Hero ──
+  const hero = get('hero');
+  if (hero) {
+    const badge = document.querySelector('.hero-badge');
+    if (badge && hero.badge) {
+      badge.innerHTML = '<span class="dot"></span> ' + hero.badge;
+    }
+    const h1 = document.querySelector('.hero h1');
+    if (h1 && hero.title) {
+      const titleHtml = hero.title.replace(/\{gold\}(.*?)\{\/gold\}/g, '<span class="gold">$1</span>');
+      h1.innerHTML = titleHtml;
+    }
+    const sub = document.querySelector('.hero-sub');
+    if (sub && hero.subtitle) sub.textContent = hero.subtitle;
+    const btns = document.querySelectorAll('.hero-buttons a, .hero-buttons button');
+    if (btns[0] && hero.btn1) {
+      const svgContent = btns[0].querySelector('svg');
+      btns[0].innerHTML = '';
+      if (svgContent) btns[0].appendChild(svgContent);
+      btns[0].appendChild(document.createTextNode(' ' + hero.btn1));
+    }
+    if (btns[1] && hero.btn2) {
+      const svgContent = btns[1].querySelector('svg');
+      btns[1].innerHTML = '';
+      if (svgContent) btns[1].appendChild(svgContent);
+      btns[1].appendChild(document.createTextNode(' ' + hero.btn2));
+    }
+  }
+
+  // ── Inventario ──
+  const inventario = get('inventario');
+  if (inventario) {
+    const grid = document.querySelector('.inventory-grid');
+    if (grid) {
+      grid.innerHTML = '';
+      inventario.forEach(item => {
+        const icon = item.categoria === 'camion' ? truckSvg : carSvg;
+        const badgeClass = item.tipo === 'nuevo' ? 'new' : 'used';
+        const badgeText = item.tipo === 'nuevo' ? 'Nuevo' : 'Seminuevo';
+        const imgHtml = item.imagen
+          ? '<img src="' + item.imagen + '" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:1" alt="' + item.nombre + '">'
+          : icon;
+        grid.innerHTML += `
+          <div class="inv-card reveal visible">
+            <div class="inv-image">
+              <span class="inv-badge ${badgeClass}">${badgeText}</span>
+              ${imgHtml}
+            </div>
+            <div class="inv-body">
+              <div class="inv-title">${icon} ${item.nombre}</div>
+              <p>${item.descripcion}</p>
+              <a href="#contacto" class="inv-link">Ver opciones →</a>
+            </div>
+          </div>`;
+      });
+    }
+  }
+
+  // ── Financiamiento ──
+  const fin = get('financiamiento');
+  if (fin) {
+    const finLeft = document.querySelector('.financing-left');
+    if (finLeft) {
+      const h2 = finLeft.querySelector('h2');
+      if (h2 && fin.title) {
+        h2.innerHTML = fin.title.replace(/\{gold\}(.*?)\{\/gold\}/g, '<span class="gold">$1</span>');
+      }
+      const p = finLeft.querySelector('p');
+      if (p && fin.desc) p.innerHTML = fin.desc;
+      if (fin.benefits) {
+        const checkList = finLeft.querySelector('.check-list');
+        if (checkList) {
+          const benefits = fin.benefits.split('\n').filter(b => b.trim());
+          checkList.innerHTML = benefits.map(b =>
+            `<li><span class="check-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>${b.trim()}</li>`
+          ).join('');
+        }
+      }
+    }
+    if (fin.cards) {
+      const cardContainer = document.querySelector('.financing-cards');
+      if (cardContainer) {
+        const themes = ['purple', 'gold-bg', 'dark'];
+        cardContainer.innerHTML = '';
+        fin.cards.forEach((card, i) => {
+          const theme = themes[i % themes.length];
+          cardContainer.innerHTML += `
+            <div class="fin-card ${theme}">
+              <div class="fin-card-icon"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+              <h3>${card.title}</h3>
+              <div class="big-num">${card.value}</div>
+              <div class="fin-label">${card.label}</div>
+              <p>${card.desc}</p>
+            </div>`;
+        });
+      }
+    }
+  }
+
+  // ── Contacto ──
+  const contacto = get('contacto');
+  if (contacto) {
+    const contactItems = document.querySelectorAll('.contact-item');
+    if (contactItems[0] && contacto.phone) {
+      contactItems[0].querySelector('.contact-item-value').textContent = contacto.phone;
+    }
+    if (contactItems[1] && contacto.email) {
+      contactItems[1].querySelector('.contact-item-value').textContent = contacto.email;
+    }
+    if (contactItems[2] && contacto.location) {
+      contactItems[2].querySelector('.contact-item-value').textContent = contacto.location;
+    }
+    const respValue = document.querySelector('.resp-value');
+    if (respValue && contacto.response) respValue.textContent = contacto.response;
+
+    // Footer contact
+    const footerItems = document.querySelectorAll('.footer-contact-item');
+    if (footerItems[0] && contacto.phone) footerItems[0].lastChild.textContent = '\n          ' + contacto.phone;
+    if (footerItems[1] && contacto.email) footerItems[1].lastChild.textContent = '\n          ' + contacto.email;
+    if (footerItems[2] && contacto.location) footerItems[2].lastChild.textContent = '\n          ' + contacto.location;
+
+    // Nav phone
+    const navCall = document.querySelector('.nav-call');
+    if (navCall && contacto.phone) {
+      const svg = navCall.querySelector('svg');
+      navCall.innerHTML = '';
+      if (svg) navCall.appendChild(svg);
+      navCall.appendChild(document.createTextNode(' ' + contacto.phone));
+    }
+
+    // Social links
+    const socialLinks = document.querySelectorAll('.footer-socials .social-icon');
+    if (socialLinks[0] && contacto.facebook) socialLinks[0].href = contacto.facebook;
+    if (socialLinks[1] && contacto.instagram) socialLinks[1].href = contacto.instagram;
+  }
+
+  // ── Estadisticas ──
+  const stats = get('estadisticas');
+  if (stats) {
+    const statCards = document.querySelectorAll('.stat-card');
+    if (stats.items) {
+      stats.items.forEach((item, i) => {
+        if (statCards[i]) {
+          const val = statCards[i].querySelector('.stat-value');
+          const lbl = statCards[i].querySelector('.stat-label');
+          if (val) val.textContent = item.value;
+          if (lbl) lbl.textContent = item.label;
+        }
+      });
+    }
+    const starValue = document.querySelector('.star-value');
+    const starLabel = document.querySelector('.star-label');
+    if (starValue && stats.rating) starValue.textContent = stats.rating;
+    if (starLabel && stats.ratingLabel) starLabel.textContent = stats.ratingLabel;
+
+    const promiseRight = document.querySelector('.promise-right');
+    if (promiseRight) {
+      const h2 = promiseRight.querySelector('h2');
+      if (h2 && stats.promiseTitle) {
+        h2.innerHTML = stats.promiseTitle.replace(/\{gold\}(.*?)\{\/gold\}/g, '<span class="gold">$1</span>');
+      }
+      const paragraphs = promiseRight.querySelectorAll('p');
+      if (paragraphs[0] && stats.promiseP1) paragraphs[0].textContent = stats.promiseP1;
+      if (paragraphs[1] && stats.promiseP2) paragraphs[1].textContent = stats.promiseP2;
+    }
+  }
+
+  // ── WhatsApp ──
+  const wa = get('whatsapp');
+  if (wa && wa.number) {
+    const waBtn = document.querySelector('.whatsapp-btn');
+    if (waBtn) {
+      const msg = encodeURIComponent(wa.message || '');
+      waBtn.href = 'https://wa.me/' + wa.number + (msg ? '?text=' + msg : '');
+    }
+  }
+})();
 </script>
 </body>
 </html>
